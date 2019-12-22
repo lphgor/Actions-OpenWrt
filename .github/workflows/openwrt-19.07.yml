@@ -53,12 +53,11 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-
-    - name: Update 2
-      run: |
-        cd lede
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
+#    - name: Update 2
+#      run: |
+#        cd lede
+#        ./scripts/feeds update -a
+#        ./scripts/feeds install -a
 
     - name: test
       run: |
