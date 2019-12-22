@@ -65,6 +65,9 @@ jobs:
         ln -sf ./lede/package/lean ./openwrt/package
         cd ./openwrt
         ./scripts/feeds install -a
+        sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
+        sed -i 's/20190515/20191219/g' ./package/lean/kcptun/Makefile
+        echo 0xDEADBEEF > ./package/lean/luci-app-ssr-plus/root/etc/config/google_fu_mode
         make defconfig
         make download -j$(nproc)
         find dl -size -1024c -exec rm -f {} \;
