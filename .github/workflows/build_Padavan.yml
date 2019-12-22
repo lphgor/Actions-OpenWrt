@@ -45,7 +45,6 @@ jobs:
         #sudo -E apt-get -q clean
         #curl -fsSL https://raw.githubusercontent.com/P3TERX/dotfiles/master/.bashrc >> ~/.bashrc
         sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-        sudo echo Asia/Shanghai > /etc/timezone
 
     - name: Clone source code
       env: 
