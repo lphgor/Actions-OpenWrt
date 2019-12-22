@@ -61,7 +61,7 @@ jobs:
 
     - name: make
       run: |
-        cp ./k2p.config ./openwrt/.config
+        cp ./k2p.1907.config ./openwrt/.config
         ln -sf ./lede/package/lean ./openwrt/package
         cd ./openwrt
         ./scripts/feeds install -a
