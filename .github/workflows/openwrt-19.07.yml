@@ -70,8 +70,8 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
         make -j$(nproc)
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@master
-        with:
-          name: K2P_firmware
-          path: ./openwrt/bin/targets/
+    - name: Upload artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: K2P_firmware
+        path: ./openwrt/bin/targets/
