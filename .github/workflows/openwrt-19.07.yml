@@ -49,18 +49,29 @@ jobs:
 
     - name: Update 1
       run: |
-        cd openwrt
+        cd ./openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
 #    - name: Update 2
 #      run: |
-#        cd lede
+#        cd ./lede
 #        ./scripts/feeds update -a
 #        ./scripts/feeds install -a
 
     - name: test
       run: |
+        cp ./k2p.config ./openwrt/.config
         ln -sf ./lede/package/lean ./openwrt/package
-        cd openwrt
+        cd ./openwrt
         ./scripts/feeds install -a
+        make defconfig
+        make download -j$(nproc)
+        find dl -size -1024c -exec rm -f {} \;
+        make -j$(nproc)
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: K2P_firmware
+          path: ./openwrt/bin/targets/
