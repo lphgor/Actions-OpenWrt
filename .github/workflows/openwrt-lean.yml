@@ -1,0 +1,81 @@
+#=================================================
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com
+#=================================================
+
+name: Build OpenWrt LEAN
+
+on: 
+  release:
+    types: [published]
+  push:
+    branches: 
+      - master
+    paths:
+      - '.build_1907'
+#  schedule:
+#    - cron: 0 8 * * 5
+#  watch:
+#    types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo -E apt-get -q update
+        sudo -E apt-get -q install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+        sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+    - name: Clone source code
+      env: 
+        REPO_URL: https://github.com/coolsnowwolf/lede
+        REPO_BRANCH: master
+      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+
+    - name: Update feeds
+      run: |
+        cd ./openwrt
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+
+    - name: Load custom configuration
+      env:
+        CONFIG_FILE: '.k2p.1907.config'
+        DIY_SH: 'diy.sh'
+      run: |
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE ./openwrt/.config
+        chmod +x $DIY_SH
+        cd openwrt
+        ../$DIY_SH
+        make defconfig
+
+    - name: Download package
+      run: |
+        cd ./openwrt
+        make download -j$(nproc)
+        find dl -size -1024c -exec rm -f {} \;
+
+    - name: Compile firmware
+      run: |
+        cd ./openwrt
+        make -j$(nproc) || make -j1 V=s
+
+    - name: Prepare artifact
+      run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: K2P_firmware
+        path: ./openwrt/bin/targets/
