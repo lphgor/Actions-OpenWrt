@@ -33,6 +33,9 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        sudo rm -rf /usr/share/dotnet /etc/apt/sources.list.d/*
+        sudo swapoff /swapfile
+        sudo rm -f /swapfile
         sudo -E apt-get -q update
         sudo -E apt-get -q install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
         sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
