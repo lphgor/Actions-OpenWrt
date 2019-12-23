@@ -50,16 +50,16 @@ jobs:
     - name: Update feeds
       run: |
         cd ./openwrt
-        cp ./k2p.1907.config ./openwrt/.config
         cp -r ./lede/package/lean ./openwrt/package/
-        sed -i 's/20190515/20191219/g' ./package/lean/kcptun/Makefile
-        echo 0xDEADBEEF > ./package/lean/luci-app-ssr-plus/root/etc/config/google_fu_mode
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
     - name: make
       run: |
         cd ./openwrt
+        cp ./k2p.1907.config ./openwrt/.config
+        sed -i 's/20190515/20191219/g' ./package/lean/kcptun/Makefile
+        echo 0xDEADBEEF > ./package/lean/luci-app-ssr-plus/root/etc/config/google_fu_mode
         sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
         make defconfig
         make download -j$(nproc)
