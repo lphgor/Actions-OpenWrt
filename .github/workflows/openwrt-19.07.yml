@@ -62,7 +62,7 @@ jobs:
     - name: make
       run: |
         cp ./k2p.1907.config ./openwrt/.config
-        ln -sf ./lede/package/lean ./openwrt/package
+        cp -r ./lede/package/lean ./openwrt/package
         cd ./openwrt
         ./scripts/feeds install -a
         sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
