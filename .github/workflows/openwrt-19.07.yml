@@ -56,8 +56,8 @@ jobs:
 
     - name: make
       run: |
-        cd ./openwrt
         cp ./k2p.1907.config ./openwrt/.config
+        cd ./openwrt
         sed -i 's/20190515/20191219/g' ./package/lean/kcptun/Makefile
         echo 0xDEADBEEF > ./package/lean/luci-app-ssr-plus/root/etc/config/google_fu_mode
         sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
