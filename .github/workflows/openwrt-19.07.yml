@@ -54,16 +54,26 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
-    - name: make
+    - name: Load custom configuration
+      env:
+        CONFIG_FILE: '.k2p.1907.config'
+        DIY_SH: 'diy.sh'
       run: |
-        cp ./k2p.1907.config ./openwrt/.config
-        cd ./openwrt
-        sed -i 's/20190515/20191219/g' ./package/lean/kcptun/Makefile
-        echo 0xDEADBEEF > ./package/lean/luci-app-ssr-plus/root/etc/config/google_fu_mode
-        sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE ./openwrt/.config
+        chmod +x $DIY_SH
+        cd openwrt
+        ../$DIY_SH
         make defconfig
+
+    - name: Download package
+      run: |
+        cd ./openwrt
         make download -j$(nproc)
         find dl -size -1024c -exec rm -f {} \;
+
+    - name: Compile firmware
+      run: |
+        cd ./openwrt
         make -j$(nproc) || make -j1 V=s
 
     - name: Prepare artifact
