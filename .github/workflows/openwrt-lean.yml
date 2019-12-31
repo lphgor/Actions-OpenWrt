@@ -54,7 +54,7 @@ jobs:
 
     - name: Load custom configuration
       env:
-        CONFIG_FILE: '.k2p.lean.config'
+        CONFIG_FILE: 'k2p.lean.config'
         DIY_SH: 'diy.sh'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE ./openwrt/.config
