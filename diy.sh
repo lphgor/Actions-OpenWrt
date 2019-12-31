@@ -16,4 +16,5 @@ echo 0xDEADBEEF > ./package/lean/luci-app-ssr-plus/root/etc/config/google_fu_mod
 
 # Modify default theme
 sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
-        
+
+cp ../zzz-default-settings ./package/lean/default-settings/files/zzz-default-settings

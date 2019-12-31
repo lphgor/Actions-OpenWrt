@@ -87,5 +87,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@master
       with:
-        name: K2P_firmware
+        name: K2P_firmware_1907
         path: ./openwrt/bin/targets/

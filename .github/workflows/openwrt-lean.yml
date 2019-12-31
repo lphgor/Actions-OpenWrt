@@ -80,5 +80,5 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@master
       with:
-        name: K2P_firmware
+        name: K2P_firmware_lean
         path: ./openwrt/bin/targets/
