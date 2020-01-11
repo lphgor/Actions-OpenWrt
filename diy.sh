@@ -9,7 +9,7 @@
 #sed -i 's/192.168.1.1/192.168.50.5/g' package/base-files/files/bin/config_generate
 
 # Update kcptun
-sed -i 's/20190515/20200103/g' ./package/lean/kcptun/Makefile
+#sed -i 's/20190515/20200103/g' ./package/lean/kcptun/Makefile
 
 # Enable ssr
 echo 0xDEADBEEF > ./package/lean/luci-app-ssr-plus/root/etc/config/google_fu_mode
@@ -17,4 +17,5 @@ echo 0xDEADBEEF > ./package/lean/luci-app-ssr-plus/root/etc/config/google_fu_mod
 # Modify default theme
 sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
 
-cp ../zzz-default-settings ./package/lean/default-settings/files/zzz-default-settings
+sed '/nas/d;/admin_status/d;/99999/d;/openwrt_release/d' ./package/lean/default-settings/files/zzz-default-settings
+
