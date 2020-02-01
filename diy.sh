@@ -17,5 +17,6 @@ echo 0xDEADBEEF > ./package/lean/luci-app-ssr-plus/root/etc/config/google_fu_mod
 # Modify default theme
 sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
 
-sed '/nas/d;/admin_status/d;/99999/d;/openwrt_release/d' ./package/lean/default-settings/files/zzz-default-settings
+sed '/nas/d;/admin_status/d;/99999/d;/openwrt_release/d;/distfeeds/d' ./package/lean/default-settings/files/zzz-default-settings
 
+sed -i 's#http://downloads.openwrt.org/releases/19.07-SNAPSHOT#http://downloads.openwrt.org/releases/19.07.1#g' ./include/version.mk
