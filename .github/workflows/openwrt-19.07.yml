@@ -70,7 +70,6 @@ jobs:
         chmod +x $DIY_SH
         cd openwrt
         ../$DIY_SH
-        date
         cat .config
         make defconfig
         ./scripts/diffconfig.sh
