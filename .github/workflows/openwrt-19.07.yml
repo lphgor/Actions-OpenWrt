@@ -69,6 +69,8 @@ jobs:
         cd openwrt
         ../$DIY_SH
         make defconfig
+        ./scripts/diffconfig.sh
+        cat .config
 
     - name: Download package
       run: |
