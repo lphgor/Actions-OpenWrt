@@ -73,7 +73,6 @@ jobs:
         cat .config
         make defconfig
         ./scripts/diffconfig.sh
-        cat .config
 
     - name: Download package
       run: |
@@ -87,7 +86,9 @@ jobs:
         make -j$(nproc) || make -j1 V=s
 
     - name: Prepare artifact
-      run: find ./openwrt/bin/targets/ -type d -name "packages" | xargs rm -rf {}
+      run: |
+        find ./openwrt/bin/targets/ -type d -name "packages" | xargs rm -rf {}
+        find ./bin/targets/ -name "*initramfs-kernel.bin" | xargs rm -rf {}
 
     - name: Upload artifact
       uses: actions/upload-artifact@master
