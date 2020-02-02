@@ -88,7 +88,7 @@ jobs:
     - name: Prepare artifact
       run: |
         find ./openwrt/bin/targets/ -type d -name "packages" | xargs rm -rf {}
-        find ./bin/targets/ -name "*initramfs-kernel.bin" | xargs rm -rf {}
+        find ./openwrt/bin/targets/ -name "*initramfs-kernel.bin" | xargs rm -rf {}
 
     - name: Upload artifact
       uses: actions/upload-artifact@master
