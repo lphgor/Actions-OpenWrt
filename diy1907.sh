@@ -15,3 +15,5 @@ sed -i 's/3.2.5/3.3.4/g;s/02273d571b8bea067eefb203a43c142d052042179904f9050a1f20
 sed -i 's/luci-theme-bootstrap/luci-theme-material/g' ./feeds/luci/collections/luci/Makefile
 
 sed -i 's#http://downloads.openwrt.org/releases/19.07-SNAPSHOT#http://downloads.openwrt.org/releases/19.07.2#g' ./include/version.mk
+
+sed -i 's#$(STAGING_DIR_HOST)/bin/upx#upx#g' ./package/luci-app-unblockneteasemusic/UnblockNeteaseMusic/Makefile
